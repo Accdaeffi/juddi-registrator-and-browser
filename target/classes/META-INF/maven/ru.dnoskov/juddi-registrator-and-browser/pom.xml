@@ -4,4 +4,18 @@
   <artifactId>juddi-registrator-and-browser</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Registrator and browser for juddi</name>
+  
+  	<dependencies>
+		<dependency>
+			<groupId>org.apache.juddi</groupId>
+			<artifactId>uddi-ws</artifactId>
+			<version>3.3.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.juddi</groupId>
+			<artifactId>juddi-client</artifactId>
+			<version>3.3.10</version>
+		</dependency>
+	</dependencies>
+  
 </project>
