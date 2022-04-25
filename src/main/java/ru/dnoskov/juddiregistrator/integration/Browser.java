@@ -18,6 +18,7 @@ import org.uddi.api_v3.GetAuthToken;
 import org.uddi.api_v3.GetServiceDetail;
 import org.uddi.api_v3.Name;
 import org.uddi.api_v3.ServiceDetail;
+import org.uddi.api_v3.ServiceInfos;
 import org.uddi.v3_service.UDDIInquiryPortType;
 import org.uddi.v3_service.UDDISecurityPortType;
 
@@ -87,13 +88,16 @@ public class Browser {
         	BusinessInfos businessInfos = businesses.getBusinessInfos();
             for (int i = 0; i < businessInfos.getBusinessInfo().size(); i++) {
                 GetServiceDetail gsd = new GetServiceDetail();
-                for (int k = 0; k < businessInfos.getBusinessInfo().get(i).getServiceInfos().getServiceInfo().size(); k++) {
-                        gsd.getServiceKey().add(businessInfos.getBusinessInfo().get(i).getServiceInfos().getServiceInfo().get(k).getServiceKey());
+                ServiceInfos servicesInfo = businessInfos.getBusinessInfo().get(i).getServiceInfos();
+                if (servicesInfo != null) {
+	                for (int k = 0; k < servicesInfo.getServiceInfo().size(); k++) {
+	                        gsd.getServiceKey().add(servicesInfo.getServiceInfo().get(k).getServiceKey());
+	                }
+	                gsd.setAuthInfo(token);
+	                ServiceDetail serviceDetail = inquiry.getServiceDetail(gsd);
+	               
+	                services.addAll(serviceDetail.getBusinessService());
                 }
-                gsd.setAuthInfo(token);
-                ServiceDetail serviceDetail = inquiry.getServiceDetail(gsd);
-               
-                services.addAll(serviceDetail.getBusinessService());
             }
             
             return services;
